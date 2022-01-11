@@ -7,7 +7,7 @@ const router = express.Router();
 //Importation du "controller" concernant les "commentaires"
 const commentCtrl = require("../controllers/comment.controller");
 // middleware d'authentification du user effectuant le comment avec celui du Token
-const commentOwner = require("../middleware/comment-owner");
+// const commentOwner = require("../middleware/comment-owner");
 
 //création d'un commentaire
 router.post("/comment/:id", commentCtrl.createComment);

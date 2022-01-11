@@ -4,29 +4,26 @@ const Comment = db.comment;
 
 //créer un post
 exports.createPost = (req, res, next) => {
-  if (!req.body.content) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-    return;
-  }
-  if (!req.body.UserId || !req.body.first_name || !req.body.last_name) {
-    res.status(400).send({
-      message: "Missing fields in request",
-    });
-    return;
-  }
+  // if (!req.body.content) {
+  //   res.status(400).send({
+  //     message: "Content can not be empty!",
+  //   });
+  //   return;
+  // }
+  // if (!req.body.UserId) {
+  //   res.status(400).send({
+  //     message: "Missing fields in request",
+  //   });
+  //   return;
+  // }
 
-  if (req.file) {
-    image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-  } else image = "";
+  // if (req.file) {
+  //   image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+  // } else image = "";
 
   const post = {
-    UserId: req.body.UserId,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
+    title: req.body.title,
     content: req.body.content,
-    image: image,
   };
 
   Post.create(post)

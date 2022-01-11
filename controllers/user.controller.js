@@ -10,8 +10,12 @@ dotenv.config();
 // Save User in the database
 
 exports.create = (req, res) => {
-  User.create(User)
+  const user = {
+    username: req.body.username,
+  };
+  User.create(user)
     .then((data) => {
+      console.log(data);
       res.send(data);
     })
     .catch((err) => {
@@ -20,6 +24,37 @@ exports.create = (req, res) => {
           err.message || "Some error occurred while creating the new User.",
       });
     });
+};
+
+exports.login = (req, res) => {
+  User.findOne({ where: { username: req.body.username } })
+    .then((user) => {
+      if (!user) {
+        return res.status(401).json({ error: "Utilisateur non trouvé !" });
+      }
+      // bcrypt
+      //   .compare(req.body.password, user.password)
+      //   .then((valid) => {
+      //     if (!valid) {
+      //       return res.status(401).json({ error: "Mot de passe incorrect !" });
+      //     }
+      //     res.status(200).json({
+      //       UserId: user.id,
+      //       first_name: user.first_name,
+      //       last_name: user.last_name,
+      //       admin: user.admin,
+      //       token: jwt.sign(
+      //         { UserId: user.id, admin: user.admin },
+      //         process.env.AUTH_SECRET_KEY_TOKEN,
+      //         {
+      //           expiresIn: "24h",
+      //         }
+      //       ),
+      //     });
+      //   })
+      //     .catch((error) => res.status(500).json({ error }));
+    })
+    .catch((error) => res.status(500).json({ error }));
 };
 
 //Supprime le compte d'un utilisateur
